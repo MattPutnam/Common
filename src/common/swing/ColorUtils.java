@@ -36,9 +36,9 @@ public class ColorUtils {
 		final int r = color.getRed(), g = color.getGreen(), b = color.getBlue();
 		final float hsb[] = Color.RGBtoHSB(r, g, b, null);
 		out.println(key + ": RGB=" + r + "," + g + "," + b + "  " +
-							"HSB=" + String.format("%.0f%n", hsb[0]*360) + "," +
-									 String.format("%.3f%n", hsb[1]) + "," +
-									 String.format("%.3f%n", hsb[2]));
+							"HSB=" + String.format("%.0f%n", Float.valueOf(hsb[0]*360)) + "," +
+									 String.format("%.3f%n", Float.valueOf(hsb[1])) + "," +
+									 String.format("%.3f%n", Float.valueOf(hsb[2])));
 	}
 	
 	public static float getHue(Color color) {

@@ -17,7 +17,7 @@ public class Comparators {
 			Pair<Integer, String> nl1 = getNumberAndLetter(s1);
 			Pair<Integer, String> nl2 = getNumberAndLetter(s2);
 			
-			int temp = nl1._1() - nl2._1();
+			int temp = nl1._1().intValue() - nl2._1().intValue();
 			if (temp == 0)
 				return nl1._2().compareTo(nl2._2());
 			else
@@ -32,7 +32,7 @@ public class Comparators {
 				else break;
 			}
 			
-			final int number = sb.length() == 0 ? 0 : Integer.parseInt(sb.toString());
+			final Integer number = sb.length() == 0 ? Integer.valueOf(0) : Integer.valueOf(sb.toString());
 			return Pair.make(number, s.substring(sb.length()));
 		}
 	};

@@ -17,13 +17,13 @@ public class MidiUtilities {
 	
 	private static final Map<String, Integer> _baseMap = new HashMap<>();
 	static {
-		_baseMap.put("C", 0);
-		_baseMap.put("D", 2);
-		_baseMap.put("E", 4);
-		_baseMap.put("F", 5);
-		_baseMap.put("G", 7);
-		_baseMap.put("A", 9);
-		_baseMap.put("B", 11);
+		_baseMap.put("C", Integer.valueOf(0));
+		_baseMap.put("D", Integer.valueOf(2));
+		_baseMap.put("E", Integer.valueOf(4));
+		_baseMap.put("F", Integer.valueOf(5));
+		_baseMap.put("G", Integer.valueOf(7));
+		_baseMap.put("A", Integer.valueOf(9));
+		_baseMap.put("B", Integer.valueOf(11));
 	}
 	
 	private static final Pattern NOTE_FORMAT = Pattern.compile("([A-G])([#b]?)(-?\\d{1,2})");
@@ -57,7 +57,7 @@ public class MidiUtilities {
 		else
 			accidental = 1;
 		
-		return _baseMap.get(pitchClass) + accidental + (12*(octave+1));
+		return _baseMap.get(pitchClass).intValue() + accidental + (12*(octave+1));
 	}
 	
 	/**

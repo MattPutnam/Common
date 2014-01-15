@@ -38,6 +38,10 @@ public class FixedSizeBuffer<T> {
 		return removed;
 	}
 	
+	public synchronized int size() {
+		return _buffer.size();
+	}
+	
 	/**
 	 * Clears the buffer.
 	 */

@@ -30,6 +30,10 @@ public class FixedSizeDoubleBuffer {
 		return removed;
 	}
 	
+	public synchronized int size() {
+		return _size;
+	}
+	
 	public synchronized void clear() {
 		_size = 0;
 		_atCapacity = false;

@@ -107,7 +107,7 @@ public final class Utils {
 		final List<Integer> copy = new ArrayList<>(new TreeSet<>(ints));
 		final int size = copy.size();
 		
-		final int[] vals = new int[size]; for (int i = 0; i < size; ++i) vals[i] = copy.get(i);
+		final int[] vals = new int[size]; for (int i = 0; i < size; ++i) vals[i] = copy.get(i).intValue();
 		final int[] diffs = new int[size-1]; for (int i = 0; i < size-1; ++i) diffs[i] = vals[i+1]-vals[i];
 		final StringBuilder sb = new StringBuilder();
 		
