@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="make-jar">
+    <target name="make-jar">
+        <jar destfile="lib/export/Common.jar">
+            <fileset dir="bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/import/commons-lang3-3.1.jar"/>
+        </jar>
+    </target>
+</project>
