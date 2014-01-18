@@ -3,7 +3,7 @@
 	<path id="import.path.ref">
 		<fileset dir="lib/import" includes="*.jar"/>
 	</path>
-	
+
 	<target name="clean">
 		<delete dir="bin"/>
 	</target>
@@ -18,11 +18,11 @@
 			   target="1.7"
 		/>
 	</target>
-	
-    <target name="make-jar" depends="compile">
-        <jar destfile="lib/export/Common.jar">
-            <fileset dir="bin"/>
-        	<zipgroupfileset dir="lib/import" includes="*.jar"/>
-        </jar>
-    </target>
+
+	<target name="make-jar" depends="compile">
+		<jar destfile="lib/export/Common.jar">
+			<fileset dir="bin"/>
+			<zipgroupfileset dir="lib/import" includes="*.jar"/>
+		</jar>
+	</target>
 </project>
