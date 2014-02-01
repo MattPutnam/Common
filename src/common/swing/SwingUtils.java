@@ -363,4 +363,27 @@ public final class SwingUtils {
 		if (buttons.length > 0)
 			buttons[0].setSelected(true);
 	}
+	
+	/**
+	 * Runs the given logic in the Swing event dispatch thread.  If the calling
+	 * thread already is the Swing thread, the logic is simply run immediately
+	 * (and will block), otherwise the logic is put in the event queue.
+	 * @param run the logic to run in the Swing thread
+	 * @param wait whether or not to block until the logic has completed.  Only
+	 * applicable when the calling thread is not the Swing thread.
+	 */
+	public static void doInSwing(final Runnable run, final boolean wait) {
+		try {
+			if (SwingUtilities.isEventDispatchThread()) {
+				run.run();
+			} else {
+				if (wait)
+					SwingUtilities.invokeAndWait(run);
+				else
+					SwingUtilities.invokeLater(run);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
