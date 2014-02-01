@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.text.Document;
 
 public class PlaceholderTextField extends JTextField {
+	private static final long serialVersionUID = 1L;
+	
 	private String _placeholder = "";
 	private boolean _placeholding = false;
 	private Color _storedColor;

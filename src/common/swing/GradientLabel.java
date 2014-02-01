@@ -9,6 +9,8 @@ import java.awt.Paint;
 import javax.swing.JLabel;
 
 public class GradientLabel extends JLabel {
+	private static final long serialVersionUID = 1L;
+	
 	private Color _leftColor;
 	private Color _rightColor;
 	

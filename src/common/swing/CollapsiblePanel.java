@@ -21,6 +21,8 @@ import common.swing.icon.ArrowIcon;
  * to programmatically expand or collapse the component.
  */
 public class CollapsiblePanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * {@link #HORIZONTAL} CollapsiblePanels display their wrapped component
 	 * to the right of the button and are suitable for long narrow horizontal

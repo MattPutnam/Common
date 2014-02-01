@@ -11,6 +11,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
 public class ColorPreviewPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel _panel;
 	private final JButton _button;
 	

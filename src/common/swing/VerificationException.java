@@ -10,6 +10,8 @@ import java.awt.Component;
  * @author Matt Putnam
  */
 public class VerificationException extends Exception {
+	private static final long serialVersionUID = 1L;
+	
 	private Component _component;
 	
 	/**

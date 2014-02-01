@@ -21,6 +21,8 @@ import common.swing.VerificationException;
  * @author Matt Putnam
  */
 public abstract class OKCancelDialog extends JDialog {
+	private static final long serialVersionUID = 1L;
+	
 	private final Component _parent;
 	
 	private JButton _okButton;
@@ -31,6 +33,8 @@ public abstract class OKCancelDialog extends JDialog {
 	public static boolean showInDialog(final Component parent,
 			final String title, final JComponent content) {
 		final OKCancelDialog dialog = new OKCancelDialog(parent) {
+			private static final long serialVersionUID = 1L;
+			
 			@Override
 			protected void verify() throws VerificationException {
 				// no op

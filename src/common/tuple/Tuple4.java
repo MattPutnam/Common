@@ -1,5 +1,6 @@
 package common.tuple;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -7,7 +8,9 @@ import java.util.List;
 
 import common.Copyable;
 
-public class Tuple4<A, B, C, D> implements Copyable<Tuple4<A, B, C, D>>, Iterable<Object> {
+public class Tuple4<A, B, C, D> implements Copyable<Tuple4<A, B, C, D>>, Iterable<Object>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private final A _a;
 	private final B _b;
 	private final C _c;

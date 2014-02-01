@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 public class NonNegativeDoubleField extends JTextField {
+	private static final long serialVersionUID = 1L;
+	
 	public NonNegativeDoubleField() {
 		super();
 		init();

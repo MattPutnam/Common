@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 public class IntField extends JTextField {
+	private static final long serialVersionUID = 1L;
+	
 	public IntField() {
 		super();
 		init();

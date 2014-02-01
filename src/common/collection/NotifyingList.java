@@ -15,6 +15,8 @@ import java.util.List;
  * @author Matt Putnam
  */
 public class NotifyingList<E> extends ArrayList<E> {
+	private static final long serialVersionUID = 1L;
+	
 	private transient List<ListListener<E>> _listeners;
 	
 	public NotifyingList() {

@@ -15,6 +15,8 @@ import javax.swing.JPanel;
  * @author Matt Putnam
  */
 public class SimpleGrid extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	public SimpleGrid(JComponent[][] grid) {
 		this(grid, Alignment.BASELINE, Alignment.LEADING);
 	}

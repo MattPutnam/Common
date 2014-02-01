@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import common.Utils;
 
 public class ListRenderer extends DefaultTableCellRenderer {
+	private static final long serialVersionUID = 1L;
+	
 	private final String _delimiter;
 	
 	public ListRenderer() {

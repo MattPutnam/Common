@@ -14,6 +14,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class CardPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	public CardPanel(List<Component> contents, final List<String> names) {
 		final JList<String> jlist = new JList<>(names.toArray(new String[names.size()]));
 		

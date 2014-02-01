@@ -12,6 +12,8 @@ import java.util.Map;
 import common.Copyable;
 
 public class Pair<A, B> implements Copyable<Pair<A, B>>, Iterable<Object>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private final A _a;
 	private final B _b;
 	

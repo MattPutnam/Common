@@ -33,6 +33,8 @@ import common.swing.dialog.Dialog;
  * @param <T> the type of item displayed in the table
  */
 public abstract class ListTable<T> extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
 	private final JButton _addButton;
 	private final JButton _editButton;
 	private final JButton _deleteButton;
