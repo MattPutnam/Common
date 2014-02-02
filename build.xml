@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="make-jar">
+	<property name="src" location="src"/>
+	<property name="bin" location="bin"/>
+	<property name="importdir" location="lib/import"/>
+	<property name="exportdir" location="lib/export"/>
+	
 	<path id="import.path.ref">
-		<fileset dir="lib/import" includes="*.jar"/>
+		<fileset dir="${importdir}" includes="*.jar"/>
 	</path>
 
 	<target name="clean">
-		<delete dir="bin"/>
+		<delete dir="${bin}"/>
 	</target>
 
 	<target name="compile" depends="clean">
-		<mkdir dir="bin"/>
-		<javac srcdir="src"
+		<mkdir dir="${bin}"/>
+		<javac srcdir="${src}"
 			   classpathref="import.path.ref"
-			   destdir="bin"
+			   destdir="${bin}"
 			   includeAntRuntime="false"
 			   source="1.7"
 			   target="1.7"
@@ -20,9 +25,9 @@
 	</target>
 
 	<target name="make-jar" depends="compile">
-		<jar destfile="lib/export/Common.jar">
-			<fileset dir="bin"/>
-			<zipgroupfileset dir="lib/import" includes="*.jar"/>
+		<jar destfile="${exportdir}/Common.jar">
+			<fileset dir="${bin}"/>
+			<zipgroupfileset dir="${importdir}" includes="*.jar"/>
 		</jar>
 	</target>
 </project>
