@@ -90,6 +90,12 @@ public final class SwingUtils {
 		return result;
 	}
 	
+	/**
+	 * Places the given components in a horizontal Box with a glue at the end,
+	 * causing the components to align left.
+	 * @param components the components to add
+	 * @return the components in a horizontal Box, aligned left
+	 */
 	public static Box buildLeftAlignedRow(Component... components) {
 		final Box result = Box.createHorizontalBox();
 		for (final Component component : components)
@@ -98,6 +104,12 @@ public final class SwingUtils {
 		return result;
 	}
 	
+	/**
+	 * Places the given components in a horizontal Box with a glue at the front,
+	 * causing the components to align right.
+	 * @param components the components to add
+	 * @return the components in a horizontal box, aligned right
+	 */
 	public static Box buildRightAlignedRow(Component... components) {
 		final Box result = Box.createHorizontalBox();
 		result.add(Box.createHorizontalGlue());
@@ -106,6 +118,12 @@ public final class SwingUtils {
 		return result;
 	}
 	
+	/**
+	 * Places the given components in a horizontal Box with a glue on both sides,
+	 * causing the components to align center
+	 * @param components the components to add
+	 * @return the components in a horizontal box, aligned center
+	 */
 	public static Box buildCenteredRow(Component... components) {
 		final Box result = Box.createHorizontalBox();
 		result.add(Box.createHorizontalGlue());
