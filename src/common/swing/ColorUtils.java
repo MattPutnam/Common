@@ -52,4 +52,11 @@ public class ColorUtils {
 	public static float getBrightness(Color color) {
 		return Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null)[2];
 	}
+	
+	public static double getLuminance(Color color) {
+	  return (0.2126 * color.getRed() +
+	          0.7152 * color.getGreen() +
+	          0.0722 * color.getBlue())
+	        / 255.0;
+	}
 }
