@@ -125,6 +125,20 @@ public final class Utils {
 		return sb.toString();
 	}
 	
+	/**
+	 * Computes the Levenshtein distance between two Strings.  The Levenshtein
+	 * distance is the minimum number of single-character insertions, deletions,
+	 * or substitutions needed to transform one String into the other.  Examples:
+	 * 
+	 * <code><ul>
+	 *   <li>levenshteinDistance("hello", "mello") == 1</li>
+	 *   <li>levenshteinDistance("hello", "world") == 4</li>
+	 *   <li>levenshteinDistance("ABC", "") == 3</li>
+	 * </ul></code>
+	 * @param s the first String
+	 * @param t the second String
+	 * @return the Levenshtein distance between the two Strings
+	 */
 	public static int levenshteinDistance(String s, String t) {
 		final int sLength = s.length();
 		final int tLength = t.length();
@@ -169,5 +183,57 @@ public final class Utils {
 		}
 
 		return v1[tLength];
+	}
+	
+	/**
+	 * Returns the longest substring contained in each input String
+	 * @param s the first String
+	 * @param t the second String
+	 * @return the longest common substring of s and t
+	 */
+	public static String longestCommonSubstring(String s, String t) {
+	  final int sLength = s.length();
+    final int tLength = t.length();
+    
+    final char[] sChars = s.toCharArray();
+    final char[] tChars = t.toCharArray();
+    
+    int maxLen = 0;
+    int endIndexPlus1 = -1;
+    int[][] L = new int[sLength+1][tLength+1];
+ 
+    for (int i = 1; i <= sLength; i++) {
+      for (int j = 1; j <= tLength; j++) {
+        if (sChars[i-1] == tChars[j-1]) {
+          if (i == 1 || j == 1)
+            L[i][j] = 1;
+          else
+            L[i][j] = L[i-1][j-1] + 1;
+          
+          if (L[i][j] > maxLen) {
+            maxLen = L[i][j];
+            endIndexPlus1 = i;
+          }
+        }
+      }
+    }
+    
+    return s.substring(endIndexPlus1-maxLen, endIndexPlus1);
+	}
+	
+	/**
+	 * Returns the longest common substring of all given Strings
+	 * @param strings the Strings to process
+	 * @return the longest common substring of all given Strings
+	 */
+	public static String longestCommonSubstring(String... strings) {
+	  final int length = strings.length;
+	  if (length == 0) return "";
+	  else if (length == 1) return strings[0];
+	  
+	  String lcs = longestCommonSubstring(strings[0], strings[1]);
+	  for (int i = 2; i < strings.length; ++i)
+	    lcs = longestCommonSubstring(lcs, strings[i]);
+	  return lcs;
 	}
 }
