@@ -404,4 +404,22 @@ public final class SwingUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Throws an IllegalStateException if this thread is the Swing Event Thread.
+	 * @throws IllegalStateException if this thread is the Swing Event Thread
+	 */
+	public static void throwIfEventThread() {
+	  if (SwingUtilities.isEventDispatchThread())
+	    throw new IllegalStateException("This method should NOT be called from the Swing Event Thread");
+	}
+	
+	/**
+	 * Throws an IllegalStateException if this thread is not the Swing Event Thread.
+	 * @throws IllegalStateException if this thread is not the Swing Event Thread
+	 */
+	public static void throwIfNotEventThread() {
+	  if (!SwingUtilities.isEventDispatchThread())
+	    throw new IllegalStateException("This method should ONLY be called from the SwingEvent Thread");
+	}
 }
