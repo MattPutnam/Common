@@ -221,7 +221,7 @@ public abstract class ListTable<T> extends JPanel {
 			top.add(extra);
 		}
 		if (allowMoveArrows) {
-			top.add(Box.createHorizontalStrut(16));
+			top.add(Box.createHorizontalGlue());
 			top.add(upButton);
 			top.add(downButton);
 		}
