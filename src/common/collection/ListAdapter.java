@@ -11,31 +11,31 @@ package common.collection;
  * @author Matt Putnam
  */
 public class ListAdapter<E> implements ListListener<E> {
-	@Override
-	public void elementAdded(ListEvent<E> event) {
-		anyChange(event);
-	}
-	
-	@Override
-	public void elementRemoved(ListEvent<E> event) {
-		anyChange(event);
-	}
-	
-	@Override
-	public void elementSet(ListEvent<E> event) {
-		anyChange(event);
-	}
-	
-	@Override
-	public void elementModified(ListEvent<E> event) {
-		anyChange(event);
-	}
-	
-	/**
-	 * Called if any change has occurred.
-	 * @param event - the associated ListEvent
-	 */
-	public void anyChange(ListEvent<E> event) {}
+  @Override
+  public void elementAdded(ListEvent<E> event) {
+    anyChange(event);
+  }
+  
+  @Override
+  public void elementRemoved(ListEvent<E> event) {
+    anyChange(event);
+  }
+  
+  @Override
+  public void elementSet(ListEvent<E> event) {
+    anyChange(event);
+  }
+  
+  @Override
+  public void elementModified(ListEvent<E> event) {
+    anyChange(event);
+  }
+  
+  /**
+   * Called if any change has occurred.
+   * @param event - the associated ListEvent
+   */
+  public void anyChange(ListEvent<E> event) {}
 
-	
+  
 }

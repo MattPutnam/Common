@@ -7,5 +7,5 @@ package common;
  * @param <T>
  */
 public interface Copyable<T> {
-	public T copy();
+  public T copy();
 }
