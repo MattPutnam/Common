@@ -35,11 +35,6 @@ public class MidiUtilities {
    * @return the MIDI number of the given note
    */
   public static int noteNameToNumber(String noteName) {
-    try {
-      return Integer.parseInt(noteName);
-    } catch (NumberFormatException nfe) {
-    }
-    
     final Matcher matcher = NOTE_FORMAT.matcher(noteName);
     if (!matcher.matches())
       throw new IllegalArgumentException("Given note name didn't match pattern");
