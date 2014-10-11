@@ -101,6 +101,7 @@ public final class Utils {
    * 
    * @param ints - the Integers to sort and group
    * @return a String with the integers sorted and grouped
+   * @see #parseRangeString(String)
    */
   public static String makeRangeString(Collection<Integer> ints) {
     // copy and remove duplicates:
@@ -123,6 +124,31 @@ public final class Utils {
     }
     
     return sb.toString();
+  }
+  
+  /**
+   * Parses a String containing a list of numbers, where each comma-separated
+   * entry is either a single int, or a range of ints separated by a hyphen.
+   * @param string the String to parse
+   * @return the list of ints represented by <tt>string</tt>
+   * @see #makeRangeString(Collection)
+   */
+  public static List<Integer> parseRangeString(String string) {
+    final List<Integer> result = new ArrayList<>();
+    
+    for (final String token : string.split("\\s*,\\s*")) {
+      final int hyphenIndex = token.indexOf("-");
+      if (hyphenIndex == -1)
+        result.add(Integer.valueOf(token.trim()));
+      else {
+        final int start = Integer.parseInt(token.substring(0, hyphenIndex).trim());
+        final int end = Integer.parseInt(token.substring(hyphenIndex+1).trim());
+        for (int i = start; i <= end; ++i)
+          result.add(Integer.valueOf(i));
+      }
+    }
+    
+    return result;
   }
   
   /**
