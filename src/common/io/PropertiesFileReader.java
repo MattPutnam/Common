@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import common.tuple.Pair;
 
@@ -17,6 +19,8 @@ import common.tuple.Pair;
  * @author Matt Putnam
  */
 public class PropertiesFileReader implements AutoCloseable {
+  private static final String DEFAULT_COMMENT_MARKER = "#";
+  
   private final BufferedReader _reader;
   private final String _commentMarker;
   
@@ -31,7 +35,7 @@ public class PropertiesFileReader implements AutoCloseable {
    * rather than a regular file, or for some other reason cannot be opened for reading.
    */
   public PropertiesFileReader(File file) throws FileNotFoundException {
-    this(file, "#");
+    this(file, DEFAULT_COMMENT_MARKER);
   }
   
   /**
@@ -46,6 +50,37 @@ public class PropertiesFileReader implements AutoCloseable {
     _commentMarker = commentMarker;
     
     _hasBeenRead = false;
+  }
+  
+  /**
+   * Reads all of the properties from the given file (default comment marker of # assumed)
+   * into a map
+   * @param file the file to read
+   * @return a map of the properties in the file
+   * @throws Exception If any exception happens while reading the file
+   */
+  public static Map<String, String> readAll(File file) throws Exception {
+    return readAll(file, DEFAULT_COMMENT_MARKER);
+  }
+  
+  /**
+   * Reads all of the properties from the given file into a map
+   * @param file the file to read
+   * @param commentMarker the comment marker
+   * @return a map of the properties in the file
+   * @throws Exception If any exception happens while reading the file
+   */
+  public static Map<String, String> readAll(File file, String commentMarker) throws Exception {
+    final Map<String, String> result = new LinkedHashMap<>();
+    
+    try (PropertiesFileReader reader = new PropertiesFileReader(file, commentMarker)) {
+      while (reader.hasNext()) {
+        final Pair<String, String> entry = reader.next();
+        result.put(entry._1().toLowerCase(), entry._2());
+      }
+    }
+    
+    return result;
   }
   
   /**
