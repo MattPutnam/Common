@@ -68,25 +68,57 @@ public final class Utils {
    * @return a String describing the size of <tt>collection</tt>
    */
   public static String countItems(Collection<?> collection, String typename) {
-    return countItems(collection, typename, "s");
+    return countItems(collection, typename, typename + "s");
   }
   
   /**
    * Counts the number of items and returns a String describing the size.  Examples:
    * <ul>
-   *   <li><tt>countItems({1}, "thing", "s") ==> "1 thing"</tt></li>
-   *   <li><tt>countItems({1, 2}, "item", "s") ==> "2 items"</tt></li>
-   *   <li><tt>countItems({1, 2, 3}, "fish", "es") ==> "3 fishes"</tt></li>
+   *   <li><tt>countItems({1}, "thing", "things") ==> "1 thing"</tt></li>
+   *   <li><tt>countItems({1, 2}, "item", "items") ==> "2 items"</tt></li>
+   *   <li><tt>countItems({1, 2, 3}, "fish", "fishes") ==> "3 fishes"</tt></li>
    * </ul>
    * 
    * @param collection - the collection of items to count
-   * @param typename - the name of the type to use
-   * @param pluralizer - the suffix to use to pluralize <tt>typename</tt>
+   * @param singular - the name of the type to use, when singular
+   * @param pluralizer - the name of the type to use, when plural
    * @return a String describing the size of <tt>collection</tt>
    */
-  public static String countItems(Collection<?> collection, String typename, String pluralizer) {
+  public static String countItems(Collection<?> collection, String singular, String plural) {
     final int size = collection.size();
-    return size + " " + typename + (size == 1 ? "" : pluralizer);
+    return size + " " + (size == 1 ? singular : plural);
+  }
+  
+  /**
+   * Returns a String with the number and given typename, pluralized with "s"
+   * if the number isn't 1.  Examples:
+   * <ul>
+   *   <li><tt>getCount(1, "thing") ==> "1 thing"</tt></li>
+   *   <li><tt>getCount(2, "item") ==> "2 items"</tt></li>
+   *   <li><tt>getCount(3, "fish") ==> "3 fishs"</tt></li>
+   * </ul>
+   * @param count - the number
+   * @param typename - the type of thing
+   * @return a String describing the number of things
+   */
+  public static String getCount(int count, String typename) {
+    return getCount(count, typename, typename + "s");
+  }
+  
+  /**
+   * Returns a String with the number and given typename.  Examples:
+   * <ul>
+   *   <li><tt>getCount(1, "thing", "things") ==> "1 thing"</tt></li>
+   *   <li><tt>getCount(2, "item", "items") ==> "2 items"</tt></li>
+   *   <li><tt>getCount(3, "fish", "fishes") ==> "3 fishes"</tt></li>
+   * </ul>
+   * @param count - the number
+   * @param singular - the name of the type to use, when singular
+   * @param plural - the name of the type to use, when plural
+   * @return a String describing the number of things.
+   */
+  public static String getCount(int count, String singular, String plural) {
+    return count + " " + (count == 1 ? singular : plural);
   }
   
   /**
