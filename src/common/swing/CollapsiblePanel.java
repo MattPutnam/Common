@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JCheckBox;
@@ -59,12 +57,7 @@ public class CollapsiblePanel extends JPanel {
     _expandCheckBox.setIcon(new ArrowIcon(ArrowIcon.EAST));
     _expandCheckBox.setSelected(true);
     
-    _expandCheckBox.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent _) {
-        setExpanded(_expandCheckBox.isSelected());
-      }
-    });
+    _expandCheckBox.addActionListener(e -> setExpanded(_expandCheckBox.isSelected()));
     
     final Box collapseBox = Box.createHorizontalBox();
     collapseBox.add(_expandCheckBox);

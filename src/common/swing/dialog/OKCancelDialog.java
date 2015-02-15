@@ -3,8 +3,6 @@ package common.swing.dialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -71,27 +69,19 @@ public abstract class OKCancelDialog extends JDialog {
     _cancelButton = new JButton("Cancel");
     getRootPane().setDefaultButton(_okButton);
     
-    _okButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
-        try {
-          verify();
-          _okPressed = true;
-          takeActionOnOK();
-          dispose();
-        } catch (VerificationException ve) {
-          Dialog.error(OKCancelDialog.this, ve.getMessage(), "Malformed Input");
-          ve.focusComponent();
-        }
+    _okButton.addActionListener(e -> {
+      try {
+        verify();
+        _okPressed = true;
+        takeActionOnOK();
+        dispose();
+      } catch (VerificationException ve) {
+        Dialog.error(OKCancelDialog.this, ve.getMessage(), "Malformed Input");
+        ve.focusComponent();
       }
     });
     
-    _cancelButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
-        dispose();
-      }
-    });
+    _cancelButton.addActionListener(e -> dispose());
     
     final JPanel subPanel = new JPanel();
     subPanel.add(_okButton);

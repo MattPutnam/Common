@@ -19,8 +19,6 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 import common.swing.SwingUtils;
 import common.swing.VerificationException;
@@ -185,20 +183,17 @@ public abstract class ListTable<T> extends JPanel {
     upButton.setEnabled(false);
     downButton.setEnabled(false);
     
-    _tableModel.addTableModelListener(new TableModelListener() {
-      @Override
-      public void tableChanged(TableModelEvent _) {
-        for (int row = 0; row < _table.getRowCount(); ++row) {
-          int rowHeight = _table.getRowHeight();
-          for (int column = 0; column < _table.getColumnCount(); ++column) {
-            Component comp = _table.prepareRenderer(_table.getCellRenderer(row, column), row, column);
-            rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
-          }
-          _table.setRowHeight(row, rowHeight);
+    _tableModel.addTableModelListener(e -> {
+      for (int row = 0; row < _table.getRowCount(); ++row) {
+        int rowHeight = _table.getRowHeight();
+        for (int column = 0; column < _table.getColumnCount(); ++column) {
+          Component comp = _table.prepareRenderer(_table.getCellRenderer(row, column), row, column);
+          rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
         }
-        _table.revalidate();
-        _table.repaint();
+        _table.setRowHeight(row, rowHeight);
       }
+      _table.revalidate();
+      _table.repaint();
     });
     
     if (allowEdit) {
@@ -233,7 +228,7 @@ public abstract class ListTable<T> extends JPanel {
     add(scrollPane, BorderLayout.CENTER);
   }
   
-  private JLabel makeLabel(String text) {
+  private static JLabel makeLabel(String text) {
     final JLabel result = new JLabel(text);
     result.setBorder(new EmptyBorder(0, 8, 0, 8));
     return result;

@@ -66,6 +66,7 @@ public class NotifyingList<E> extends ArrayList<E> {
       this.remove(index);
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   public NotifyingList<E> clone() {
     return (NotifyingList<E>) super.clone();
