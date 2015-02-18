@@ -299,6 +299,12 @@ public final class SwingUtils {
     return item;
   }
   
+  public static JButton button(String text, ActionListener listener) {
+    final JButton result = new JButton(text);
+    result.addActionListener(listener);
+    return result;
+  }
+  
   /**
    * Convenience method for creating buttons with an icon and no text.  Wraps
    * the button in an empty border to give it some space.
