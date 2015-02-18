@@ -49,22 +49,16 @@ public final class BlockingTask extends Thread {
   
   @Override
   public void run() {
-    SwingUtils.doInSwing(new Runnable() {
-      @Override
-      public void run() {
-        _rootPaneContainer.setGlassPane(_glass);
-        _glass.setVisible(true);
-      }
+    SwingUtils.doInSwing(() -> {
+      _rootPaneContainer.setGlassPane(_glass);
+      _glass.setVisible(true);
     }, true);
     
     _logic.run();
     
-    SwingUtils.doInSwing(new Runnable() {
-      @Override
-      public void run() {
-        _glass.setVisible(false);
-        _rootPaneContainer.setGlassPane(_savedGlass);
-      }
+    SwingUtils.doInSwing(() -> {
+      _glass.setVisible(false);
+      _rootPaneContainer.setGlassPane(_savedGlass);
     }, false);
   }
   

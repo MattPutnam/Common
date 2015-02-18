@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class CardPanel extends JPanel {
   private static final long serialVersionUID = 1L;
@@ -26,12 +24,7 @@ public class CardPanel extends JPanel {
     }
     
     jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    jlist.addListSelectionListener(new ListSelectionListener() {
-      @Override
-      public void valueChanged(ListSelectionEvent e) {
-        cardLayout.show(cardPanel, names.get(jlist.getSelectedIndex()));
-      }
-    });
+    jlist.addListSelectionListener(e -> cardLayout.show(cardPanel, names.get(jlist.getSelectedIndex())));
     jlist.setSelectedIndex(0);
     
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(jlist), cardPanel);
