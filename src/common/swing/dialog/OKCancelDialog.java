@@ -28,15 +28,13 @@ public abstract class OKCancelDialog extends JDialog {
   
   private boolean _okPressed;
   
-  public static boolean showInDialog(final Component parent,
-      final String title, final JComponent content) {
-    final OKCancelDialog dialog = new OKCancelDialog(parent) {
-      private static final long serialVersionUID = 1L;
-      
+  public static OKCancelDialog create(Component parent, String title,
+      JComponent content) {
+    return new OKCancelDialog(parent) {
+      private static final long serialVersionUID = -6634180474470652854L;
+
       @Override
-      protected void verify() throws VerificationException {
-        // no op
-      }
+      protected void verify() throws VerificationException { /* no op */ }
       
       @Override
       protected String declareTitle() {
@@ -48,14 +46,56 @@ public abstract class OKCancelDialog extends JDialog {
         return content;
       }
     };
+  }
+  
+  /**
+   * Creates a simple dialog from a given JComponent and displays it, blocks,
+   * and returns whether or not the OK button was pressed.
+   * @param parent the Component to anchor the dialog above.  Can be null,
+   *        which causes the dialog to appear at the center of the screen.
+   * @param title the title for the dialog
+   * @param content the component that will comprise the dialog
+   * @return <tt>true</tt> iff the OK button was pressed.
+   */
+  public static boolean showInDialog(Component parent, String title,
+      JComponent content) {
+    final OKCancelDialog dialog = create(parent, title, content);
     dialog.showDialog();
     return dialog.okPressed();
+  }
+
+  public static <T extends JComponent> void showInDialog(
+      final Component parent, final String title, final T content,
+      final OnOK<T> onOK) {
+    if (showInDialog(parent, title, content))
+      onOK.doOnOK(content);
+  }
+  
+  /**
+   * Shows a dialog and performs a given action if the OK button is pressed.
+   * @param dialog the dialog to show
+   * @param onOK a function from the created dialog to <tt>void</tt> that is
+   *        called if the OK button is pressed
+   */
+  public static <T extends OKCancelDialog> void showDialog(final T dialog, OnOK<T> onOK) {
+    dialog.showDialog();
+    if (dialog.okPressed())
+      onOK.doOnOK(dialog);
+  }
+  
+  /**
+   * A Functional Interface 
+   * @param <T>
+   */
+  @FunctionalInterface
+  public static interface OnOK<T extends Component> {
+    public void doOnOK(T component);
   }
   
   /**
    * Creates a new OKCancelDialog
-   * @param parent - the Component to anchor this dialog above.  Can be
-   * null, which causes this to anchor to the center of the screen.
+   * @param parent the Component to anchor this dialog above.  Can be
+   *        null, which causes this to anchor to the center of the screen.
    */
   public OKCancelDialog(Component parent) {
     _parent = parent;
