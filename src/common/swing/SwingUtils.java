@@ -354,15 +354,12 @@ public final class SwingUtils {
    * @param delayMillis the delay in milliseconds
    */
   public static void doDelayedInSwing(final Runnable runnable, final long delayMillis) {
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          Thread.sleep(delayMillis);
-          SwingUtilities.invokeLater(runnable);
-        } catch (InterruptedException e) {
-          // ignore
-        }
+    new Thread(() -> {
+      try {
+        Thread.sleep(delayMillis);
+        SwingUtilities.invokeLater(runnable);
+      } catch (InterruptedException e) {
+        // ignore
       }
     }).start();
   }

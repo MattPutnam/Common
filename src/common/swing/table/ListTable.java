@@ -2,8 +2,6 @@ package common.swing.table;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -17,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import common.swing.SwingUtils;
 import common.swing.VerificationException;
@@ -90,93 +86,75 @@ public abstract class ListTable<T> extends JPanel {
       Component... extraComponents) {
     super();
     
-    _allowEdit = allowEdit;
-    
-    _addButton = addIcon == null ? new JButton("+") : SwingUtils.iconButton(addIcon);
-    _addButton.setToolTipText("Add new " + declareTypeName());
-    _addButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        takeActionOnAdd();
-        _tableModel.notifyTableDataChanged();
-      }
-    });
-    
-    _editButton = editIcon == null ? new JButton("Edit") : SwingUtils.iconButton(editIcon);
-    _editButton.setToolTipText("Edit selected " + declareTypeName());
-    _editButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        takeActionOnEdit(_tableModel.getList().get(_table.getSelectedRow()));
-        _tableModel.notifyTableDataChanged();
-      }
-    });
-    
-    _deleteButton = deleteIcon == null ? new JButton("-") : SwingUtils.iconButton(deleteIcon);
-    _deleteButton.setToolTipText("Delete selected " + declareTypeName());
-    _deleteButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        final List<T> selected = getSelectedRows();
-        
-        if (!Dialog.confirm(ListTable.this, "Are you sure you want to delete the selected items?  " +
-            declareAdditionalDeleteWarning(selected), "Confirm Delete"))
-          return;
-        
-        _tableModel.getList().removeAll(selected);
-        
-        takeActionAfterDelete(selected);
-        _tableModel.notifyTableDataChanged();
-      }
-    });
-    
-    final JButton upButton = upIcon == null ? new JButton("Move Up") : SwingUtils.iconButton(upIcon);
-    upButton.setToolTipText("Move selected " + declareTypeName() + " up");
-    upButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        final int selectedRow = _table.getSelectedRow();
-        final T selectedItem = list.get(selectedRow);
-        list.remove(selectedRow);
-        list.add(selectedRow-1, selectedItem);
-        _table.setRowSelectionInterval(selectedRow-1, selectedRow-1);
-        _tableModel.notifyTableDataChanged();
-      }
-    });
-    
-    final JButton downButton = downIcon == null ? new JButton("Move Down") : SwingUtils.iconButton(downIcon);
-    downButton.setToolTipText("Move selected " + declareTypeName() + " down");
-    downButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        final int selectedRow = _table.getSelectedRow();
-        final T selectedItem = list.get(selectedRow);
-        list.remove(selectedRow);
-        list.add(selectedRow+1, selectedItem);
-        _table.setRowSelectionInterval(selectedRow+1, selectedRow+1);
-        _tableModel.notifyTableDataChanged();
-      }
-    });
-    
     _table = createTable();
     _tableModel = createTableModel();
     _tableModel.setList(list);
     _table.setModel(_tableModel);
     
-    _table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-      @Override
-      public void valueChanged(ListSelectionEvent e) {
-        final int numSelected = _table.getSelectedRowCount();
-        final int selectedRow = _table.getSelectedRow();
-        final T selectedItem = selectedRow == -1 ? null : _tableModel.getList().get(selectedRow);
-        
-        final boolean rowMovable = selectedRow >= 0 && isRowMovable(selectedRow, selectedItem);
-        
-        _editButton.setEnabled(numSelected == 1 && isRowEditable(selectedRow, selectedItem));
-        _deleteButton.setEnabled(numSelected > 0 && allowDelete(getSelectedRows()));
-        upButton.setEnabled(numSelected == 1 & selectedRow > 0 && rowMovable);
-        downButton.setEnabled(numSelected == 1 && rowMovable && selectedRow < list.size()-1);
-      }
+    _allowEdit = allowEdit;
+    
+    _addButton = addIcon == null ? new JButton("+") : SwingUtils.iconButton(addIcon);
+    _addButton.setToolTipText("Add new " + declareTypeName());
+    _addButton.addActionListener(e -> {
+      takeActionOnAdd();
+      _tableModel.notifyTableDataChanged();
+    });
+    
+    _editButton = editIcon == null ? new JButton("Edit") : SwingUtils.iconButton(editIcon);
+    _editButton.setToolTipText("Edit selected " + declareTypeName());
+    _editButton.addActionListener(e -> {
+      takeActionOnEdit(_tableModel.getList().get(_table.getSelectedRow()));
+      _tableModel.notifyTableDataChanged();
+    });
+    
+    _deleteButton = deleteIcon == null ? new JButton("-") : SwingUtils.iconButton(deleteIcon);
+    _deleteButton.setToolTipText("Delete selected " + declareTypeName());
+    _deleteButton.addActionListener(e -> {
+      final List<T> selected = getSelectedRows();
+      
+      if (!Dialog.confirm(ListTable.this, "Are you sure you want to delete the selected items?  " +
+          declareAdditionalDeleteWarning(selected), "Confirm Delete"))
+        return;
+      
+      _tableModel.getList().removeAll(selected);
+      
+      takeActionAfterDelete(selected);
+      _tableModel.notifyTableDataChanged();
+    });
+    
+    final JButton upButton = upIcon == null ? new JButton("Move Up") : SwingUtils.iconButton(upIcon);
+    upButton.setToolTipText("Move selected " + declareTypeName() + " up");
+    upButton.addActionListener(e -> {
+      final int selectedRow = _table.getSelectedRow();
+      final T selectedItem = list.get(selectedRow);
+      list.remove(selectedRow);
+      list.add(selectedRow-1, selectedItem);
+      _table.setRowSelectionInterval(selectedRow-1, selectedRow-1);
+      _tableModel.notifyTableDataChanged();
+    });
+    
+    final JButton downButton = downIcon == null ? new JButton("Move Down") : SwingUtils.iconButton(downIcon);
+    downButton.setToolTipText("Move selected " + declareTypeName() + " down");
+    downButton.addActionListener(e -> {
+      final int selectedRow = _table.getSelectedRow();
+      final T selectedItem = list.get(selectedRow);
+      list.remove(selectedRow);
+      list.add(selectedRow+1, selectedItem);
+      _table.setRowSelectionInterval(selectedRow+1, selectedRow+1);
+      _tableModel.notifyTableDataChanged();
+    });
+    
+    _table.getSelectionModel().addListSelectionListener(e -> {
+      final int numSelected = _table.getSelectedRowCount();
+      final int selectedRow = _table.getSelectedRow();
+      final T selectedItem = selectedRow == -1 ? null : _tableModel.getList().get(selectedRow);
+      
+      final boolean rowMovable = selectedRow >= 0 && isRowMovable(selectedRow, selectedItem);
+      
+      _editButton.setEnabled(numSelected == 1 && isRowEditable(selectedRow, selectedItem));
+      _deleteButton.setEnabled(numSelected > 0 && allowDelete(getSelectedRows()));
+      upButton.setEnabled(numSelected == 1 & selectedRow > 0 && rowMovable);
+      downButton.setEnabled(numSelected == 1 && rowMovable && selectedRow < list.size()-1);
     });
     _editButton.setEnabled(false);
     _deleteButton.setEnabled(false);
