@@ -299,9 +299,29 @@ public final class SwingUtils {
     return item;
   }
   
-  public static JButton button(String text, ActionListener listener) {
+  /**
+   * Convenience method for creating a JButton
+   * @param text the text of the button
+   * @param onClick the ActionListener to add
+   * @return a button with the given text and ActionListener
+   */
+  public static JButton button(String text, ActionListener onClick) {
     final JButton result = new JButton(text);
-    result.addActionListener(listener);
+    result.addActionListener(onClick);
+    return result;
+  }
+  
+  /**
+   * Convenience method for creating a JButton
+   * @param text the text of the button
+   * @param tooltip the tooltip for the button
+   * @param onClick the ActionListener to add
+   * @return a button with the given text and ActionListener
+   */
+  public static JButton button(String text, String tooltip, ActionListener onClick) {
+    final JButton result = new JButton(text);
+    result.setToolTipText(tooltip);
+    result.addActionListener(onClick);
     return result;
   }
   

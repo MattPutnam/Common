@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import common.swing.SwingUtils;
 import common.swing.VerificationException;
 
 /**
@@ -105,11 +106,7 @@ public abstract class OKCancelDialog extends JDialog {
    * Builds the view.
    */
   public final void showDialog() {
-    _okButton = new JButton("OK");
-    _cancelButton = new JButton("Cancel");
-    getRootPane().setDefaultButton(_okButton);
-    
-    _okButton.addActionListener(e -> {
+    _okButton = SwingUtils.button("OK", e -> {
       try {
         verify();
         _okPressed = true;
@@ -121,7 +118,9 @@ public abstract class OKCancelDialog extends JDialog {
       }
     });
     
-    _cancelButton.addActionListener(e -> dispose());
+    _cancelButton = SwingUtils.button("Cancel", e -> dispose());
+    
+    getRootPane().setDefaultButton(_okButton);
     
     final JPanel subPanel = new JPanel();
     subPanel.add(_okButton);

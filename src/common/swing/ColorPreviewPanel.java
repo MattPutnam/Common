@@ -18,21 +18,19 @@ public class ColorPreviewPanel extends JPanel {
   
   public ColorPreviewPanel(final Color initial) {
     _panel = new JPanel();
-    _button = new JButton("Select");
-    
-    _selected = initial;
-    
-    SwingUtils.freezeSize(_panel, 40, _button.getPreferredSize().height-8);
-    _panel.setBackground(initial);
-    _panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    
-    _button.addActionListener(e -> {
+    _button = SwingUtils.button("Select", e -> {
       final Color selected = JColorChooser.showDialog(_panel, "Choose Color", _selected);
       if (selected != null) {
         _panel.setBackground(selected);
         _selected = selected;
       }
     });
+    
+    _selected = initial;
+    
+    SwingUtils.freezeSize(_panel, 40, _button.getPreferredSize().height-8);
+    _panel.setBackground(initial);
+    _panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     add(_panel);
