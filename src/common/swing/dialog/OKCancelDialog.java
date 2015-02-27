@@ -79,6 +79,8 @@ public abstract class OKCancelDialog extends JDialog {
    *        called if the OK button is pressed
    */
   public static <T extends OKCancelDialog> void showDialog(final T dialog, OnOK<T> onOK) {
+    SwingUtils.throwIfNotEventThread();
+    
     dialog.showDialog();
     if (dialog.okPressed())
       onOK.doOnOK(dialog);
