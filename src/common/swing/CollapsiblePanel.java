@@ -29,6 +29,11 @@ public class CollapsiblePanel extends JPanel {
    */
   public static enum Orientation { HORIZONTAL, VERTICAL }
   
+  /**
+   * The possible icon types to use
+   */
+  public static enum Icon { CHECKBOX, ARROW }
+  
   private final JComponent _child;
   private final JCheckBox _expandCheckBox;
   
@@ -38,6 +43,7 @@ public class CollapsiblePanel extends JPanel {
    * Creates a CollapsiblePanel
    * @param child the child component
    * @param orientation the Orientation
+   * @param icon the icon to use
    * @param title the name for the expand/collapse button
    * @param tooltip the tooltip for the expand/collapse button
    * @param additionalComponents any additional components to put next to
@@ -45,7 +51,7 @@ public class CollapsiblePanel extends JPanel {
    * {@link Box}, so use {@link Box#createHorizontalGlue()} and
    * {@link Box#createHorizontalStrut(int)} to control spacing
    */
-  public CollapsiblePanel(JComponent child, Orientation orientation,
+  public CollapsiblePanel(JComponent child, Orientation orientation, Icon icon,
       String title, String tooltip, Component... additionalComponents) {
     _child = child;
     
@@ -54,7 +60,7 @@ public class CollapsiblePanel extends JPanel {
     _expandCheckBox.setToolTipText(tooltip);
     _expandCheckBox.setHorizontalTextPosition(JCheckBox.RIGHT);
     _expandCheckBox.setSelectedIcon(new ArrowIcon(ArrowIcon.SOUTH));
-    _expandCheckBox.setIcon(new ArrowIcon(ArrowIcon.EAST));
+    if (icon == Icon.ARROW) _expandCheckBox.setIcon(new ArrowIcon(ArrowIcon.EAST));
     _expandCheckBox.setSelected(true);
     
     _expandCheckBox.addActionListener(e -> setExpanded(_expandCheckBox.isSelected()));
