@@ -35,6 +35,7 @@ public class ColorPreviewPanel extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     add(_panel);
     add(_button);
+    setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 0));
   }
   
   public Color getSelectedColor() {
