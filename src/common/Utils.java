@@ -136,6 +136,9 @@ public final class Utils {
    * @see #parseRangeString(String)
    */
   public static String makeRangeString(Collection<Integer> ints) {
+    if (ints.isEmpty())
+      return "";
+    
     // copy and remove duplicates:
     final List<Integer> copy = new ArrayList<>(new TreeSet<>(ints));
     final int size = copy.size();
