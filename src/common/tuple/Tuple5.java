@@ -99,6 +99,8 @@ public class Tuple5<A, B, C, D, E> implements Copyable<Tuple5<A, B, C, D, E>>, I
   
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
     @SuppressWarnings("unchecked")
     final Tuple5<A, B, C, D, E> t = (Tuple5<A, B, C, D, E>) obj;
     return this._a.equals(t._a) &&

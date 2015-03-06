@@ -74,6 +74,8 @@ public class Triple<A, B, C> implements Copyable<Triple<A, B, C>>, Iterable<Obje
   
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
     @SuppressWarnings("unchecked")
     final Triple<A, B, C> t = (Triple<A, B, C>) obj;
     return this._a.equals(t._a) &&

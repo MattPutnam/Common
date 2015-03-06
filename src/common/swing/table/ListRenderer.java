@@ -29,7 +29,7 @@ public class ListRenderer extends DefaultTableCellRenderer {
     JLabel label = (JLabel) c;
     Iterable<?> i = (Iterable<?>) value;
     
-    label.setText(i == null || i.iterator().hasNext() ? Utils.mkString(i, _delimiter) : "None");
+    label.setText(i != null && i.iterator().hasNext() ? Utils.mkString(i, _delimiter) : "None");
     return label;
   }
 }

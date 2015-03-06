@@ -86,6 +86,8 @@ public class Tuple4<A, B, C, D> implements Copyable<Tuple4<A, B, C, D>>, Iterabl
   
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
     @SuppressWarnings("unchecked")
     final Tuple4<A, B, C, D> t = (Tuple4<A, B, C, D>) obj;
     return this._a.equals(t._a) &&

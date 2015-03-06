@@ -103,8 +103,10 @@ public class ListSet<E> implements Set<E> {
   }
   
   @Override
-  public boolean equals(Object arg0) {
-    return _list.equals(((ListSet<?>) arg0)._list);
+  public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
+    return _list.equals(((ListSet<?>) obj)._list);
   }
   
   @Override

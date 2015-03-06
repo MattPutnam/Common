@@ -91,6 +91,8 @@ public class Pair<A, B> implements Copyable<Pair<A, B>>, Iterable<Object>, Seria
   
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
     @SuppressWarnings("unchecked")
     final Pair<A, B> p = (Pair<A, B>) obj;
     return this._a.equals(p._a) && this._b.equals(p._b);

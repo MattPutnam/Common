@@ -205,7 +205,7 @@ public final class Utils {
     final int tLength = t.length();
 
     // degenerate cases
-    if (s == t) return 0;
+    if (s == t || s.equals(t)) return 0;
     if (sLength == 0) return tLength;
     if (tLength == 0) return sLength;
     
