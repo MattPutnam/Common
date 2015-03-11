@@ -75,16 +75,18 @@ public class MidiUtilities {
     if (mm instanceof ShortMessage) {
       final ShortMessage sm = (ShortMessage) mm;
       if (isNoteOn(sm)) {
-        return "Note On ch=" + (sm.getChannel()+1) + " note=" + sm.getData1()
+        return "Note On ch=" + sm.getChannel() + " note=" + sm.getData1()
             + " (" + noteNumberToName(sm.getData1()) + ") vel="
             + sm.getData2();
       } else if (isNoteOff(sm)) {
-        return "Note Off ch=" + (sm.getChannel()+1) + " note="
+        return "Note Off ch=" + sm.getChannel() + " note="
             + sm.getData1() + " ("
             + noteNumberToName(sm.getData1()) + ")";
       } else if (isControlChange(sm)) {
-        return "Control Change ch=" + (sm.getChannel()+1) + " control="
+        return "Control Change ch=" + sm.getChannel() + " control="
             + sm.getData1() + " value=" + sm.getData2();
+      } else if (isPitchBend(sm)) {
+        return "Pitch Bend ch=" + sm.getChannel() + " value=" + sm.getData2();
       }
       
       return "ShortMessage[ch=" + (sm.getChannel()+1) +
@@ -122,11 +124,20 @@ public class MidiUtilities {
   
   /**
    * Determines if the given ShortMessage is a MIDI Control Change message
-   * @param sm - the ShortMessage to cehck
+   * @param sm - the ShortMessage to check
    * @return <tt>true</tt> if the ShortMessage is a MIDI Control Change message
    */
   public static boolean isControlChange(ShortMessage sm) {
     return sm.getCommand() == ShortMessage.CONTROL_CHANGE;
+  }
+  
+  /**
+   * Determines if the given ShortMessage is a MIDI Pitch Bend message
+   * @param sm the ShortMessage to check
+   * @return <tt>true</tt> if the ShortMessage is a MIDI Pitch Bend message
+   */
+  public static boolean isPitchBend(ShortMessage sm) {
+    return sm.getCommand() == ShortMessage.PITCH_BEND;
   }
   
   /**
