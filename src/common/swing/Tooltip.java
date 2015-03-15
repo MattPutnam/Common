@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.swing.JComponent;
 
-public final class Tooltip extends MouseMotionAdapter {
+public final class Tooltip {
   private Tooltip() {}
   
   public static void registerTooltip(JComponent component, TooltipGenerator generator) {
