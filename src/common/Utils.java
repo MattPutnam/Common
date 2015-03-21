@@ -55,6 +55,23 @@ public final class Utils {
   }
   
   /**
+   * Prepares the given String for viewing within a Swing component using HTML.
+   * Escapes HTML special characters and wraps the whole thing in an &lt;html&gt;
+   * element.  If the input is empty, returns the empty string.
+   * @param string the input String
+   * @return an HTML-ready version of the input String
+   */
+  public static String renderForSwingHTML(String string) {
+    if (string.isEmpty())
+      return string;
+    
+    return "<html>" + string.replaceAll("&", "&amp;")
+                            .replaceAll("<", "&lt;")
+                            .replaceAll(">", "&gt;")
+                            .replaceAll("\n", "<br>") + "</html>";
+  }
+  
+  /**
    * Counts the number of items and returns a String describing the size.
    * The pluralizing suffix is assumed to be "s".  Examples:
    * <ul>
