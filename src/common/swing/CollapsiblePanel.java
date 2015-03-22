@@ -3,6 +3,7 @@ package common.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 
 import javax.swing.Box;
@@ -60,6 +61,7 @@ public class CollapsiblePanel extends JPanel {
     _expandCheckBox.setToolTipText(tooltip);
     _expandCheckBox.setHorizontalTextPosition(JCheckBox.RIGHT);
     _expandCheckBox.setSelectedIcon(new ArrowIcon(ArrowIcon.SOUTH));
+    _expandCheckBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     if (icon == Icon.ARROW) _expandCheckBox.setIcon(new ArrowIcon(ArrowIcon.EAST));
     _expandCheckBox.setSelected(true);
     
