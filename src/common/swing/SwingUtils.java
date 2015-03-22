@@ -247,6 +247,19 @@ public final class SwingUtils {
     menu.setMnemonic(mnemonic);
     return menu;
   }
+  
+  /**
+   * Convenience method for creating a JMenuItem
+   * @param text the menu item label
+   * @param icon the icon
+   * @param action the action to perform when the menu item is selected
+   * @return
+   */
+  public static JMenuItem menuItem(String text, Icon icon, ActionListener action) {
+    final JMenuItem item = new JMenuItem(text, icon);
+    item.addActionListener(action);
+    return item;
+  }
 
   /**
    * Convenience method for creating a JMenuItem
