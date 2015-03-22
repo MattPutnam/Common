@@ -44,20 +44,20 @@ public class GraphicsUtils {
     g2d.drawLine(x1, y1, x2, y2);
     
     final AffineTransform tx = g2d.getTransform();
-
+    
     final Polygon arrowHead = new Polygon();  
     arrowHead.addPoint(0, 0);
     arrowHead.addPoint(-5, -5);
     arrowHead.addPoint(5, -5);
     
-      final double angle = Math.atan2(y2-y1, x2-x1);
-      tx.translate(x2, y2);
-      tx.rotate((angle-Math.PI/2d));  
-
-      final Graphics2D g = (Graphics2D) g2d.create();
-      g.setTransform(tx);   
-      g.fill(arrowHead);
-      g.dispose();
+    final double angle = Math.atan2(y2-y1, x2-x1);
+    tx.translate(x2, y2);
+    tx.rotate((angle-Math.PI/2d));  
+    
+    final Graphics2D g = (Graphics2D) g2d.create();
+    g.setTransform(tx);   
+    g.fill(arrowHead);
+    g.dispose();
   }
   
   /**
@@ -67,28 +67,27 @@ public class GraphicsUtils {
    * @return an arrow shape from fromPt to toPt
    */
   public static Shape createArrowShape(Point fromPt, Point toPt) {
-      Polygon arrowPolygon = new Polygon();
-      arrowPolygon.addPoint(-6,1);
-      arrowPolygon.addPoint(3,1);
-      arrowPolygon.addPoint(3,3);
-      arrowPolygon.addPoint(6,0);
-      arrowPolygon.addPoint(3,-3);
-      arrowPolygon.addPoint(3,-1);
-      arrowPolygon.addPoint(-6,-1);
+    final Polygon arrowPolygon = new Polygon();
+    arrowPolygon.addPoint(-6,1);
+    arrowPolygon.addPoint(3,1);
+    arrowPolygon.addPoint(3,3);
+    arrowPolygon.addPoint(6,0);
+    arrowPolygon.addPoint(3,-3);
+    arrowPolygon.addPoint(3,-1);
+    arrowPolygon.addPoint(-6,-1);
+    
+    final Point midPoint = midpoint(fromPt, toPt);
+    
+    double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
 
+    final AffineTransform transform = new AffineTransform();
+    transform.translate(midPoint.x, midPoint.y);
+    final double ptDistance = fromPt.distance(toPt);
+    final double scale = ptDistance / 12.0; // 12 because it's the length of the arrow polygon.
+    transform.scale(scale, scale);
+    transform.rotate(rotate);
 
-      Point midPoint = midpoint(fromPt, toPt);
-
-      double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
-
-      AffineTransform transform = new AffineTransform();
-      transform.translate(midPoint.x, midPoint.y);
-      double ptDistance = fromPt.distance(toPt);
-      double scale = ptDistance / 12.0; // 12 because it's the length of the arrow polygon.
-      transform.scale(scale, scale);
-      transform.rotate(rotate);
-
-      return transform.createTransformedShape(arrowPolygon);
+    return transform.createTransformedShape(arrowPolygon);
   }
 
   /**
@@ -98,8 +97,8 @@ public class GraphicsUtils {
    * @return the midpoint between p1 and p2
    */
   public static Point midpoint(Point p1, Point p2) {
-      return new Point((int)((p1.x + p2.x)/2.0), 
-                       (int)((p1.y + p2.y)/2.0));
+    return new Point((int)((p1.x + p2.x)/2.0), 
+                     (int)((p1.y + p2.y)/2.0));
   }
   
   /**
@@ -107,6 +106,6 @@ public class GraphicsUtils {
    * @param g the graphics object to antialias
    */
   public static void antialias(Graphics2D g) {
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,  RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
   }
 }
