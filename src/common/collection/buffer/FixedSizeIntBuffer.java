@@ -47,6 +47,11 @@ public class FixedSizeIntBuffer {
     return removed;
   }
   
+  public synchronized void fill(int value) {
+    for (int i = 0; i < _size; ++i)
+      add(value);
+  }
+  
   public synchronized int size() {
     return _size;
   }
