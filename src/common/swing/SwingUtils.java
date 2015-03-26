@@ -13,6 +13,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Arrays;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
@@ -29,6 +30,12 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * A collection of utilities for shaping and laying out Swing components,
+ * creating menu items and buttons, and running things on the Swing thread.
+ * 
+ * @author Matt Putnam
+ */
 public final class SwingUtils {
   private static int SHORTCUT_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
@@ -137,9 +144,10 @@ public final class SwingUtils {
    * Freezes the height of the given component, preventing it from expanding
    * to fill any additional space.
    * @param component the component to freeze
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeHeight(JComponent component) {
-    freezeHeight(component, component.getPreferredSize().height);
+  public static JComponent freezeHeight(JComponent component) {
+    return freezeHeight(component, component.getPreferredSize().height);
   }
   
   /**
@@ -147,20 +155,23 @@ public final class SwingUtils {
    * it from expanding to fill any additional space.
    * @param component the component to freeze
    * @param height the height to freeze the component to
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeHeight(JComponent component, int height) {
+  public static JComponent freezeHeight(JComponent component, int height) {
     component.setMinimumSize(new Dimension(component.getMinimumSize().width, height));
     component.setPreferredSize(new Dimension(component.getPreferredSize().width, height));
     component.setMaximumSize(new Dimension(component.getMaximumSize().width, height));
+    return component;
   }
   
   /**
    * Freezes the width of the given component, preventing it from expanding
    * to fill any additional space.
    * @param component the component to freeze
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeWidth(JComponent component) {
-    freezeWidth(component, component.getPreferredSize().width);
+  public static JComponent freezeWidth(JComponent component) {
+    return freezeWidth(component, component.getPreferredSize().width);
   }
   
   /**
@@ -168,20 +179,23 @@ public final class SwingUtils {
    * it from expanding to fill any additional space.
    * @param component the component to freeze
    * @param width the width to freeze the component to
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeWidth(JComponent component, int width) {
+  public static JComponent freezeWidth(JComponent component, int width) {
     component.setMinimumSize(new Dimension(width, component.getMinimumSize().height));
     component.setPreferredSize(new Dimension(width, component.getPreferredSize().height));
     component.setMaximumSize(new Dimension(width, component.getMaximumSize().height));
+    return component;
   }
   
   /**
    * Freezes the size of the given component, preventing it from expanding
    * to fill any additional space.
    * @param component the component to freeze
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeSize(JComponent component) {
-    freezeSize(component, component.getPreferredSize().width, component.getPreferredSize().height);
+  public static JComponent freezeSize(JComponent component) {
+    return freezeSize(component, component.getPreferredSize().width, component.getPreferredSize().height);
   }
   
   /**
@@ -190,11 +204,13 @@ public final class SwingUtils {
    * @param component the component to freeze
    * @param width the width to freeze the component to
    * @param height the height to freeze the component to
+   * @return the component passed in, for chaining purposes
    */
-  public static void freezeSize(JComponent component, int width, int height) {
+  public static JComponent freezeSize(JComponent component, int width, int height) {
     component.setMinimumSize(new Dimension(width, height));
     component.setPreferredSize(new Dimension(width, height));
     component.setMaximumSize(new Dimension(width, height));
+    return component;
   }
 
   /**
@@ -382,40 +398,27 @@ public final class SwingUtils {
   }
   
   /**
-   * Causes <tt>runnable.run()</tt> to be run in the swing thread after a given delay
-   * @param runnable the task to run in the swing thread
-   * @param delayMillis the delay in milliseconds
-   */
-  public static void doDelayedInSwing(final Runnable runnable, final long delayMillis) {
-    new Thread(() -> {
-      try {
-        Thread.sleep(delayMillis);
-        SwingUtilities.invokeLater(runnable);
-      } catch (InterruptedException e) {
-        // ignore
-      }
-    }).start();
-  }
-  
-  /**
    * Creates a {@link ButtonGroup} and adds all the given buttons to it.
    * @param buttons the buttons to group
+   * @return the created ButtonGroup
    */
-  public static void group(AbstractButton... buttons) {
+  public static ButtonGroup group(AbstractButton... buttons) {
     final ButtonGroup group = new ButtonGroup();
-    for (final AbstractButton button : buttons)
-      group.add(button);
+    Arrays.stream(buttons).forEach(group::add);
+    return group;
   }
   
   /**
    * Creates a {@link ButtonGroup} and adds all the given buttons to it, then
    * selects the first button
    * @param buttons the buttons to group
+   * @return the created ButtonGroup
    */
-  public static void groupAndSelectFirst(AbstractButton... buttons) {
-    group(buttons);
+  public static ButtonGroup groupAndSelectFirst(AbstractButton... buttons) {
+    final ButtonGroup group = group(buttons);
     if (buttons.length > 0)
       buttons[0].setSelected(true);
+    return group;
   }
   
   /**
@@ -442,6 +445,22 @@ public final class SwingUtils {
   }
   
   /**
+   * Causes <tt>runnable.run()</tt> to be run in the swing thread after a given delay
+   * @param runnable the task to run in the swing thread
+   * @param delayMillis the delay in milliseconds
+   */
+  public static void doDelayedInSwing(final Runnable runnable, final long delayMillis) {
+    new Thread(() -> {
+      try {
+        Thread.sleep(delayMillis);
+        SwingUtilities.invokeLater(runnable);
+      } catch (InterruptedException e) {
+        // ignore
+      }
+    }).start();
+  }
+  
+  /**
    * Throws an IllegalStateException if this thread is the Swing Event Thread.
    * @throws IllegalStateException if this thread is the Swing Event Thread
    */
@@ -456,6 +475,6 @@ public final class SwingUtils {
    */
   public static void throwIfNotEventThread() {
     if (!SwingUtilities.isEventDispatchThread())
-      throw new IllegalStateException("This method should ONLY be called from the SwingEvent Thread");
+      throw new IllegalStateException("This method should ONLY be called from the Swing Event Thread");
   }
 }
