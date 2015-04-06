@@ -92,8 +92,7 @@ public final class SwingUtils {
    */
   public static Box buildRow(Component... components) {
     final Box result = Box.createHorizontalBox();
-    for (final Component component : components)
-      result.add(component);
+    Arrays.stream(components).forEach(result::add);
     return result;
   }
   
@@ -105,8 +104,7 @@ public final class SwingUtils {
    */
   public static Box buildLeftAlignedRow(Component... components) {
     final Box result = Box.createHorizontalBox();
-    for (final Component component : components)
-      result.add(component);
+    Arrays.stream(components).forEach(result::add);
     result.add(Box.createHorizontalGlue());
     return result;
   }
@@ -120,8 +118,7 @@ public final class SwingUtils {
   public static Box buildRightAlignedRow(Component... components) {
     final Box result = Box.createHorizontalBox();
     result.add(Box.createHorizontalGlue());
-    for (final Component component : components)
-      result.add(component);
+    Arrays.stream(components).forEach(result::add);
     return result;
   }
   
@@ -134,9 +131,19 @@ public final class SwingUtils {
   public static Box buildCenteredRow(Component... components) {
     final Box result = Box.createHorizontalBox();
     result.add(Box.createHorizontalGlue());
-    for (final Component component : components)
-      result.add(component);
+    Arrays.stream(components).forEach(result::add);
     result.add(Box.createHorizontalGlue());
+    return result;
+  }
+  
+  /**
+   * Places the given components in a JPanel with a FlowLayout.
+   * @param components the components to add
+   * @return a JPanel with a FlowLayout with the given components
+   */
+  public static JPanel flowLayout(Component... components) {
+    final JPanel result = new JPanel(); // FlowLayout is default
+    Arrays.stream(components).forEach(result::add);
     return result;
   }
   
