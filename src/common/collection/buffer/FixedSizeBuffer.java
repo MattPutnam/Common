@@ -3,6 +3,7 @@ package common.collection.buffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A fixed size circular FIFO buffer.
@@ -54,5 +55,9 @@ public class FixedSizeBuffer<T> {
    */
   public synchronized List<T> getItems() {
     return new ArrayList<>(_buffer);
+  }
+  
+  public Stream<T> stream() {
+    return getItems().stream();
   }
 }

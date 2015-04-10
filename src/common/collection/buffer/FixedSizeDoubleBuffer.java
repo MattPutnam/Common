@@ -1,5 +1,8 @@
 package common.collection.buffer;
 
+import java.util.Arrays;
+import java.util.stream.DoubleStream;
+
 public class FixedSizeDoubleBuffer {
   private final double[] _buffer;
   private final int _bufferSize;
@@ -46,5 +49,9 @@ public class FixedSizeDoubleBuffer {
        srcPtr = (srcPtr-1+_bufferSize)%_bufferSize, --destPtr)
       result[destPtr] = _buffer[srcPtr];
     return result;
+  }
+  
+  public DoubleStream stream() {
+    return Arrays.stream(getValues());
   }
 }

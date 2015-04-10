@@ -1,5 +1,8 @@
 package common.collection.buffer;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 /**
  * A fixed size FIFO buffer of type <tt>int</tt>.  Implemented as an array
  * 
@@ -68,5 +71,9 @@ public class FixedSizeIntBuffer {
        srcPtr = (srcPtr-1+_bufferSize)%_bufferSize, --destPtr)
       result[destPtr] = _buffer[srcPtr];
     return result;
+  }
+  
+  public IntStream stream() {
+    return Arrays.stream(getValues());
   }
 }
